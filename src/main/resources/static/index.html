@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Cerraduras</title>
+    <link rel="stylesheet" href="/practica1/src/main/resources/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Cálculo de Cerraduras</h1>
+        
+        <!-- Cerradura de Kleene -->
+        <label for="n-kleene">Ingrese valor para la cerradura de Kleene:</label>
+        <input type="text" id="n-kleene" placeholder="Escribe un número entero...">
+        <button onclick="getKleene()">Calcular Cerradura de Kleene</button>
+        
+        <div class="result" id="kleene-result">Resultado de la cerradura de Kleene aparecerá aquí</div>
+        
+        <!-- Cerradura Positiva -->
+        <label for="n-positive">Ingrese valor para la cerradura Positiva:</label>
+        <input type="text" id="n-positive" placeholder="Escribe un número entero...">
+        <button onclick="getPositive()">Calcular Cerradura Positiva</button>
+        
+        <div class="result" id="positive-result">Resultado de la cerradura positiva aparecerá aquí</div>
+    </div>
+
+    <script>
+        function getKleene() {
+            const n = document.getElementById("n-kleene").value;
+            fetch(`/api/cerradura/estrella/${n}`, {
+                method: 'PUT',
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById("kleene-result").innerText = JSON.stringify(data, null, 2))
+            .catch(error => console.error('Error:', error));
+        }
+
+        function getPositive() {
+            const n = document.getElementById("n-positive").value;
+            fetch(`/api/cerradura/positiva/${n}`, {
+                method: 'PUT',
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById("positive-result").innerText = JSON.stringify(data, null, 2))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>
